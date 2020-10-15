@@ -1,0 +1,63 @@
+﻿<style>
+    #totalSum {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+</style>
+
+<script>
+
+    $(document).ready(function () {
+        document.getElementById('totalSum').innerHTML = "Order- R" + 0;
+    });
+
+    let total = 0;
+    [...document.getElementsByClassName('form-check-input')].forEach(function (item) {
+        item.addEventListener('change', function (e) {
+            if (e.target.checked) {
+                total += parseInt(e.target.value, 10)
+            } else {
+                total -= parseInt(e.target.value, 10)
+            }
+            document.getElementById('totalSum').innerHTML = "Order- R" + total;
+        });
+
+    });
+
+</script>
+
+@model List<OrderInClient.Models.OrderinClientModel>;
+<div>
+    <p>
+        @*@item.RestaurantName restaurant in @item.Suburb we found for you:*@
+        restaurant(s) in we found for you:
+    </p>
+</div>
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <table>
+            <tr>
+                <td>
+                    @item.RestaurantName - @item.Suburb - rated #@item.Rank overall
+                    <div>
+                        <input class="form-check-input" value="@item.Price" type="checkbox">@item.MenuItem - @item.Price.ToString("C")
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+    }}
+else
+{
+    <p>No value returned</p>
+}
+<p id="totalSum"></p>

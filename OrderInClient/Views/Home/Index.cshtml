@@ -1,0 +1,46 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model OrderInClient.Models.SearchRequest
+
+<table>
+<tr>
+    <td>
+        <form method="post" id="MainView">
+                <input id="searchId" type="search" asp-for="SearchText" autocomplete="on"/><input type="button" value="Search" id="searchBtn" onclick="TestMethod()" />
+            </form>
+
+        </td>
+    </tr>
+        <tr>
+            <td>
+                <div id="resultPartial">
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+    <script >
+        function TestMethod() {
+            
+            //var searchText = $("#searchId").val();
+            //var searchSplittedValues = searchText.split("in");
+           // $("#menuId").val() = searchSplittedValues[0];
+            //$('#cityId').val()  = searchSplittedValues[1];
+
+            var formdata = $("#MainView").serialize();
+
+            $.ajax({
+                url: "/Home/Details",
+                type: "post",
+                data: formdata,
+                success: function (d) {
+                    $('#resultPartial').html(d);
+                }
+            })
+        }
+    </script>
